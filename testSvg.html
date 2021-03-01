@@ -76,7 +76,7 @@
                     let prevPercent = prev / 100;
 
                     for (let mark of markers) {
-                        if ($(mark).hasClass('')) continue;
+                        if ($(mark).hasClass('mesh')) continue;
 
                         let top = ((parseInt($(mark).css('top')) - OFFSET) / prevPercent) * percent;
                         let left = ((parseInt($(mark).css('left')) - OFFSET) / prevPercent) * percent;
