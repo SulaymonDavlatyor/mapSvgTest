@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="jquery.min.js"></script>
+    <script>
+        "use strict"
+
+        const OFFSET = 109;
+
+        $(document).ready(function () {
+
+            $('#in').on('click', function () {
+
+                let matrix = $('.meshDiv').css('transform');
+                let scaleNum = Number(matrix.match(/\d/)) * 2;
+                scaleNum == 0 ? scaleNum = 1 : 0;
+
+                $('.meshDiv').css('transform', `scale(${scaleNum}) translate(50%,50%)`);
+
+                function success() {
+                    let matrix2 = $('.meshDiv').css('transform');
+                    console.log(matrix2);
+                    let tmpArr = matrix2.match(/\d*/g);
+                    let translateArr = tmpArr.filter(function (el) {
+                        return el != "";
+                    });
+
+                    let markers = $('img');
+                    let percent = translateArr[5] / 100;
+                    let prev        = translateArr[5] / 2;
+                    let prevPercent = prev / 100;
+
+                    for (let mark of markers) {
+                        if ($(mark).hasClass('mesh')) continue;
+
+                        console.log("В случае погрешности ,значения буду каждый раз меняться")
+                        console.log(((parseInt($(mark).css('top')) - OFFSET) / prevPercent));
+                        console.log(((parseInt($(mark).css('left')) - OFFSET) / prevPercent));
+
+                        let top = ((parseInt($(mark).css('top')) - OFFSET) / prevPercent) * percent;
+                        let left = ((parseInt($(mark).css('left')) - OFFSET) / prevPercent) * percent;
+
+                        $(mark).css('top', `${top + OFFSET}px`);
+                        $(mark).css('left',`${left + OFFSET}px`);
+                    }
+                }
+                setTimeout(success, 1000);
+            });
+
+
+            $('#out').on('click', function () {
+
+                let matrix = $('.meshDiv').css('transform');
+                let scaleNum = Number(matrix.match(/\d/)) / 2;
+                scaleNum == 0 ? scaleNum = 1 : 0;
+
+                $('.meshDiv').css('transform', `scale(${scaleNum}) translate(50%,50%)`);
+
+                function success() {
+                    let matrix2 = $('.meshDiv').css('transform');
+                    let tmpArr = matrix2.match(/\d*/g);
+                    let translateArr = tmpArr.filter(function (el) {
+                        return el != "";
+                    });
+
+                    let markers = $('img');
+                    let percent = translateArr[5] / 100;
+                    let prev = translateArr[5] * 2;
+                    let prevPercent = prev / 100;
+
+                    for (let mark of markers) {
+                        if ($(mark).hasClass('')) continue;
+
+                        let top = ((parseInt($(mark).css('top')) - OFFSET) / prevPercent) * percent;
+                        let left = ((parseInt($(mark).css('left')) - OFFSET) / prevPercent) * percent;
+
+                        $(mark).css('top', `${top + OFFSET}px`);
+                        $(mark).css('left', `${left + OFFSET}px`);
+                    }
+                }
+
+                setTimeout(success, 1200);
+
+            })
+
+        })
+
+    </script>
+</head>
+<body>
+
+<div class="transition meshDiv">
+    <img class="mesh" src="images/mesh.png"/>
+</div>
+
+<img class="markerOne transition" src="images/marker.png"/>
+<img class="markerTwo transition" src="images/marker.png"/>
+<img class="markerThree transition" src="images/marker.png"/>
+
+<button class="buttonIn"id="in">Zoom in</button>
+<button class="buttonOut" id="out">Zoom out</button>
+</body>
+</html>
