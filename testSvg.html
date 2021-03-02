@@ -18,22 +18,19 @@
 
             $('#in').on('click', function () {
 
-                let matrix = $('.meshDiv').css('transform');
+                let matrix   = $('.meshDiv').css('transform');
                 let scaleNum = Number(matrix.match(/\d/)) * 2;
                 scaleNum == 0 ? scaleNum = 1 : 0;
 
                 $('.meshDiv').css('transform', `scale(${scaleNum}) translate(50%,50%)`);
 
-                function success() {
-                    let matrix2 = $('.meshDiv').css('transform');
-                    console.log(matrix2);
-                    let tmpArr = matrix2.match(/\d*/g);
+                    let tmpArr = matrix.match(/\d*/g);
                     let translateArr = tmpArr.filter(function (el) {
                         return el != "";
                     });
 
-                    let markers = $('img');
-                    let percent = translateArr[5] / 100;
+                    let markers     = $('img');
+                    let percent     = translateArr[5] / 100;
                     let prev        = translateArr[5] / 2;
                     let prevPercent = prev / 100;
 
@@ -41,55 +38,46 @@
                         if ($(mark).hasClass('mesh')) continue;
 
                         console.log("В случае погрешности ,значения буду каждый раз меняться")
-                        console.log(((parseInt($(mark).css('top')) - OFFSET) / prevPercent));
+                        console.log(((parseInt($(mark).css('top'))  - OFFSET) / prevPercent));
                         console.log(((parseInt($(mark).css('left')) - OFFSET) / prevPercent));
 
-                        let top = ((parseInt($(mark).css('top')) - OFFSET) / prevPercent) * percent;
+                        let top  = ((parseInt($(mark).css('top'))  - OFFSET) / prevPercent) * percent;
                         let left = ((parseInt($(mark).css('left')) - OFFSET) / prevPercent) * percent;
 
                         $(mark).css('top', `${top + OFFSET}px`);
                         $(mark).css('left',`${left + OFFSET}px`);
-                    }
-                }
-                setTimeout(success, 1000);
+                    }       
             });
 
 
             $('#out').on('click', function () {
 
-                let matrix = $('.meshDiv').css('transform');
+                let matrix   = $('.meshDiv').css('transform');
                 let scaleNum = Number(matrix.match(/\d/)) / 2;
                 scaleNum == 0 ? scaleNum = 1 : 0;
 
                 $('.meshDiv').css('transform', `scale(${scaleNum}) translate(50%,50%)`);
 
-                function success() {
-                    let matrix2 = $('.meshDiv').css('transform');
-                    let tmpArr = matrix2.match(/\d*/g);
+                    let tmpArr = matrix.match(/\d*/g);
                     let translateArr = tmpArr.filter(function (el) {
                         return el != "";
                     });
 
-                    let markers = $('img');
-                    let percent = translateArr[5] / 100;
-                    let prev = translateArr[5] * 2;
+                    let markers     = $('img');
+                    let percent     = translateArr[5] / 100;
+                    let prev        = translateArr[5] * 2;
                     let prevPercent = prev / 100;
 
                     for (let mark of markers) {
                         if ($(mark).hasClass('mesh')) continue;
 
-                        let top = ((parseInt($(mark).css('top')) - OFFSET) / prevPercent) * percent;
+                        let top =  ((parseInt($(mark).css('top'))  - OFFSET) / prevPercent) * percent;
                         let left = ((parseInt($(mark).css('left')) - OFFSET) / prevPercent) * percent;
 
-                        $(mark).css('top', `${top + OFFSET}px`);
+                        $(mark).css('top',  `${top  + OFFSET}px`);
                         $(mark).css('left', `${left + OFFSET}px`);
-                    }
-                }
-
-                setTimeout(success, 1200);
-
+                    }         
             })
-
         })
 
     </script>
@@ -100,8 +88,8 @@
     <img class="mesh" src="images/mesh.png"/>
 </div>
 
-<img class="markerOne transition" src="images/marker.png"/>
-<img class="markerTwo transition" src="images/marker.png"/>
+<img class="markerOne transition"   src="images/marker.png"/>
+<img class="markerTwo transition"   src="images/marker.png"/>
 <img class="markerThree transition" src="images/marker.png"/>
 
 <button class="buttonIn"id="in">Zoom in</button>
